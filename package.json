@@ -10,6 +10,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@clerk/clerk-expo": "^1.0.5",
     "@expo-google-fonts/roboto": "^0.2.3",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.0.2",
