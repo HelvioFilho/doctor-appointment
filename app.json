@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Consulta Médica",
+    "slug": "doctor-appointment",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/system/icon.png",
+    "scheme": "com.hsvf.doctorappointment",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/system/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#DCF5F6"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hsvf.doctorappointment"
+    },
+    "android": {
+      "package": "com.hsvf.doctorappointment"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
