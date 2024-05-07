@@ -7,11 +7,30 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import * as SplashScreen from "expo-splash-screen";
-import { SafeAreaView, StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
+import * as SecureStore from "expo-secure-store";
+
 import { SignInScreen } from "./SignInScreen";
 
 SplashScreen.preventAutoHideAsync();
+
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -27,8 +46,8 @@ export default function Layout() {
   }
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
-      <SafeAreaView className="flex-1">
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <View className="flex-1 bg-background-100">
         <StatusBar barStyle={"dark-content"} />
         <SignedIn>
           <Slot />
@@ -36,7 +55,7 @@ export default function Layout() {
         <SignedOut>
           <SignInScreen />
         </SignedOut>
-      </SafeAreaView>
+      </View>
     </ClerkProvider>
   );
 }
