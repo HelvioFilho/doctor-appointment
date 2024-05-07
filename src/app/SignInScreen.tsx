@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, Image, Text, View } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,10 +13,10 @@ import { useOAuth } from "@clerk/clerk-expo";
 
 import { Button } from "@/components/Button";
 
+import { useWarmUpBrowser } from "@/hooks/warmUpBrowser";
 import { colors } from "@/theme/colors";
 
 import Logo from "@/assets/system/icon.png";
-import { useWarmUpBrowser } from "@/hooks/warmUpBrowser";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -112,11 +112,10 @@ export function SignInScreen() {
   }, [startTyping]);
 
   return (
-    <View className="flex-1 bg-background-100 items-center justify-center pt-32">
-      <Animated.Image
-        source={Logo}
-        style={[{ width: 157, height: 157 }, animatedLogoStyles]}
-      />
+    <View className="flex-1 bg-background-100 items-center justify-center">
+      <Animated.View style={[animatedLogoStyles]}>
+        <Image source={Logo} style={[{ width: 157, height: 157 }]} />
+      </Animated.View>
       <Text className="text-2xl font-bold mt-52">{displayText}</Text>
 
       <Animated.View
@@ -126,7 +125,7 @@ export function SignInScreen() {
             width: "85%",
             justifyContent: "center",
             alignItems: "center",
-            marginTop: 40,
+            marginTop: 20,
             gap: 10,
           },
         ]}
