@@ -10,7 +10,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar, View } from "react-native";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import * as SecureStore from "expo-secure-store";
+import { ApolloProvider } from "@apollo/client";
 
+import client from "@/services/apollo";
 import { SignInScreen } from "./SignInScreen";
 
 SplashScreen.preventAutoHideAsync();
@@ -50,7 +52,9 @@ export default function Layout() {
       <View className="flex-1 bg-background-100">
         <StatusBar barStyle={"dark-content"} />
         <SignedIn>
-          <Slot />
+          <ApolloProvider client={client}>
+            <Slot />
+          </ApolloProvider>
         </SignedIn>
         <SignedOut>
           <SignInScreen />
