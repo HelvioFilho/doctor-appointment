@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { Dimensions, FlatList, Image, Text, View } from "react-native";
+import { Alert, Dimensions, FlatList, Image, View } from "react-native";
 import { Loading } from "./Loading";
 
 const GET_SLIDERS = gql`
@@ -19,7 +19,6 @@ type SliderList = {
 };
 
 export function Slider() {
-  // const [getSliders, setSliders] = useState<SliderList[]>([]);
   const { data, loading, error } = useQuery<{ getSliders: SliderList[] }>(
     GET_SLIDERS
   );
@@ -31,8 +30,11 @@ export function Slider() {
       </View>
     );
   if (error) {
-    console.log(error);
-    return <Text>Error: {error.message} </Text>;
+    Alert.alert(
+      "Aviso",
+      "Algo deu errado e não foi possível carregar as imagens!"
+    );
+    return null;
   }
 
   return (
@@ -41,13 +43,15 @@ export function Slider() {
         data={data?.getSliders}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        contentContainerStyle={{ flexGrow: 1, paddingEnd: 2 }}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
           return (
             <Image
               source={{ uri: item.imageUrl }}
-              className="h-44 rounded-lg m-1"
-              alt=""
+              className="h-44 rounded-lg mx-2 my-2"
+              alt={item.name}
               style={{ width: Dimensions.get("screen").width * 0.9 }}
             />
           );
