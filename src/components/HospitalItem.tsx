@@ -9,12 +9,12 @@ const urlImage = process.env.EXPO_PUBLIC_URL_IMAGE;
 
 export function HospitalItem({ data }: HospitalItemProps) {
   return (
-    <View>
+    <View className="w-52 my-2 border border-gray-400 rounded-xl">
       <Image
-        className="w-full h-28"
+        className="w-full h-28 rounded-t-xl"
         source={{ uri: `${urlImage}/hospital/${data.image}` }}
       />
-      <View>
+      <View className="p-2">
         <Text className="font-semibold text-base">{data.name}</Text>
         <Text className="font-regular text-sm text-gray-600">
           {data.address}
