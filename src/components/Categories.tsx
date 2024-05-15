@@ -1,5 +1,14 @@
+import {
+  Alert,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useRouter } from "expo-router";
 import { gql, useQuery } from "@apollo/client";
-import { Alert, FlatList, Image, Text, View } from "react-native";
+
 import { Loading } from "./Loading";
 import { SubHeader } from "./SubHeader";
 
@@ -17,13 +26,17 @@ const GET_CATEGORIES = gql`
   }
 `;
 
-type Category = {
+export type Category = {
   id: string;
   name: string;
   icon: string;
 };
 
+const urlImage = process.env.EXPO_PUBLIC_URL_IMAGE;
+
 export function Categories() {
+  const { push } = useRouter();
+
   const { data, loading, error } = useQuery<{ getCategories: Category[] }>(
     GET_CATEGORIES,
     {
@@ -61,7 +74,15 @@ export function Categories() {
         horizontal={true}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View className="mt-6 mb-4 mx-2.5 items-center gap-2">
+          <TouchableOpacity
+            className="mt-6 mb-4 mx-2.5 items-center gap-2"
+            onPress={() =>
+              push({
+                pathname: "/hospitalDoctorsList",
+                params: { category: item.name },
+              })
+            }
+          >
             <View
               className={`
                 rounded-full 
@@ -72,10 +93,13 @@ export function Categories() {
                 border-secondary
               `}
             >
-              <Image source={{ uri: item.icon }} className="w-8 h-8" />
+              <Image
+                source={{ uri: `${urlImage}/icon/${item.icon}` }}
+                className="w-8 h-8"
+              />
             </View>
             <Text className="text-center font-regular">{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
