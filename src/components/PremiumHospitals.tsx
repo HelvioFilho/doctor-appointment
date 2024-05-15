@@ -1,6 +1,7 @@
 import { Alert, FlatList, View } from "react-native";
-import { SubHeader } from "./SubHeader";
 import { gql, useQuery } from "@apollo/client";
+
+import { SubHeader } from "./SubHeader";
 import { Loading } from "./Loading";
 import { HospitalItem } from "./HospitalItem";
 
@@ -74,10 +75,13 @@ export function PremiumHospitals() {
   }
 
   return (
-    <View className="mt-4">
+    <View className="mt-4 px-2">
       <SubHeader title="Nossos Hospitais Premium" subtitle="Ver todos" />
       <FlatList
         data={data?.getHospitals}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ flexGrow: 1, paddingEnd: 2, gap: 15 }}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <HospitalItem data={item} />}
       />
