@@ -1,5 +1,6 @@
 import { useQuery, gql } from "@apollo/client";
 import { Alert, Dimensions, FlatList, Image, View } from "react-native";
+
 import { Loading } from "./Loading";
 
 const GET_SLIDERS = gql`
@@ -17,6 +18,8 @@ type SliderList = {
   name: string;
   imageUrl: string;
 };
+
+const urlImage = process.env.EXPO_PUBLIC_URL_IMAGE;
 
 export function Slider() {
   const { data, loading, error } = useQuery<{ getSliders: SliderList[] }>(
@@ -49,7 +52,7 @@ export function Slider() {
         renderItem={({ item }) => {
           return (
             <Image
-              source={{ uri: item.imageUrl }}
+              source={{ uri: `${urlImage}/${item.imageUrl}` }}
               className="h-44 rounded-lg mx-2 my-2"
               alt={item.name}
               style={{ width: Dimensions.get("screen").width * 0.9 }}
