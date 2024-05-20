@@ -7,6 +7,7 @@ import { HospitalDoctorTab } from "@/components/HospitalDoctorTab";
 import { HospitalList } from "@/components/HospitalList";
 
 import { colors } from "@/theme/colors";
+import { useState } from "react";
 
 type HospitalDoctorsParams = {
   category: string;
@@ -15,6 +16,10 @@ type HospitalDoctorsParams = {
 export default function hospitalDoctorsList() {
   const { back } = useRouter();
   const { category } = useLocalSearchParams() as HospitalDoctorsParams;
+
+  const [activeTab, setActiveTab] = useState<"hospital" | "doctors">(
+    "hospital"
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
@@ -34,8 +39,12 @@ export default function hospitalDoctorsList() {
         </Text>
         <View className="flex-1" />
       </View>
-      <HospitalDoctorTab />
-      <HospitalList category={category} />
+      <HospitalDoctorTab setActiveTab={setActiveTab} />
+      {activeTab === "hospital" ? (
+        <HospitalList category={category} />
+      ) : (
+        <Text>Doctor List</Text>
+      )}
     </SafeAreaView>
   );
 }

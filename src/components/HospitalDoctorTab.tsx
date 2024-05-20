@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
-export function HospitalDoctorTab() {
+type HospitalDoctorTabProps = {
+  setActiveTab: (active: "hospital" | "doctors") => void;
+};
+
+export function HospitalDoctorTab({ setActiveTab }: HospitalDoctorTabProps) {
   const [active, setActive] = useState(true);
 
   return (
     <View className="p-2">
       <View className="flex-row align-center justify-around">
         <Pressable
-          onPress={() => setActive(true)}
+          onPress={() => {
+            setActive(true);
+            setActiveTab("hospital");
+          }}
           className={`
             p-1 
             border-b-2
@@ -27,7 +34,10 @@ export function HospitalDoctorTab() {
           </Text>
         </Pressable>
         <Pressable
-          onPress={() => setActive(false)}
+          onPress={() => {
+            setActive(false);
+            setActiveTab("doctors");
+          }}
           className={`
             
             p-1 
