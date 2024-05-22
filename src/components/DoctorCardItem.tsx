@@ -4,13 +4,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { colors } from "@/theme/colors";
 import { Button } from "./Button";
 
-type DoctorListItemProps = {
+type DoctorCardItemProps = {
   data: GetDoctorsByCategoryData;
 };
 
 const urlImage = process.env.EXPO_PUBLIC_URL_IMAGE;
 
-export function DoctorListItem({ data }: DoctorListItemProps) {
+export function DoctorCardItem({ data }: DoctorCardItemProps) {
   return (
     <View className="rounded-xl mb-5 border border-gray-400">
       <View className="p-4 flex-row">
