@@ -8,6 +8,7 @@ import { HospitalList } from "@/components/HospitalList";
 
 import { colors } from "@/theme/colors";
 import { useState } from "react";
+import { DoctorList } from "@/components/DoctorList";
 
 type HospitalDoctorsParams = {
   category: string;
@@ -43,7 +44,7 @@ export default function hospitalDoctorsList() {
       {activeTab === "hospital" ? (
         <HospitalList category={category} />
       ) : (
-        <Text>Doctor List</Text>
+        <DoctorList category={category} />
       )}
     </SafeAreaView>
   );
