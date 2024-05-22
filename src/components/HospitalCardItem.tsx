@@ -38,6 +38,14 @@ export function HospitalCardItem({ data }: HospitalCardItemProps) {
 
   return (
     <View className="rounded-xl mb-5 border border-gray-400">
+      {data.premium && (
+        <View className="flex-row items-center absolute top-3 left-3 z-10 py-1 px-4 bg-secondary rounded-xl">
+          <Ionicons name="shield-checkmark" size={15} color={colors.primary} />
+          <Text className="font-semibold text-sm text-primary ml-2">
+            Hospital Premium
+          </Text>
+        </View>
+      )}
       <Image
         source={{ uri: `${urlImage}/hospital/${data.image}` }}
         className="w-full h-36 rounded-t-xl"
