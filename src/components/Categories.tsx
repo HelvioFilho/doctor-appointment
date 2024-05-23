@@ -78,7 +78,7 @@ export function Categories() {
             className="mt-6 mb-4 mx-2.5 items-center gap-2"
             onPress={() =>
               push({
-                pathname: "/hospitalDoctorsList",
+                pathname: "/hospital/hospitalDoctorsList",
                 params: { category: item.name },
               })
             }
