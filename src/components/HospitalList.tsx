@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Alert, FlatList, View } from "react-native";
+import { Alert, FlatList, Pressable, View } from "react-native";
 import { gql, useQuery } from "@apollo/client";
+import { useRouter } from "expo-router";
 
 import { Loading } from "./Loading";
 import { Hospital } from "./PremiumHospitals";
@@ -12,6 +13,8 @@ import {
   getDistanceAndDuration,
   getForegroundPermissions,
 } from "@/library/location";
+
+import { useHospitalStore } from "@/store/hospitalStore";
 
 const GET_HOSPITALS_BY_CATEGORY = gql`
   query GetHospitalsByCategory($category: String!, $limit: Int) {
@@ -25,6 +28,8 @@ const GET_HOSPITALS_BY_CATEGORY = gql`
       description
       premium
       image
+      operation
+      day_of_week
       categories {
         id
         name
@@ -39,6 +44,8 @@ export type GetHospitalsByCategoryData = Hospital & {
     id: string;
     name: string;
   }[];
+  operation: string;
+  day_of_week: string;
   distance?: string;
   duration?: string;
 };
@@ -59,6 +66,9 @@ export function HospitalList({ category }: HospitalCardItemProps) {
 
   const [hospitals, setHospitals] = useState<GetHospitalsByCategoryData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { push } = useRouter();
+  const { setHospitalData } = useHospitalStore();
 
   const fetchDistancesAndDurations = async (
     hospitals: GetHospitalsByCategoryData[]
@@ -134,8 +144,13 @@ export function HospitalList({ category }: HospitalCardItemProps) {
     return null;
   }
 
+  const handleNavigateToDetails = (hospital: GetHospitalsByCategoryData) => {
+    setHospitalData(hospital);
+    push("/hospital/hospitalDetails");
+  };
+
   return (
-    <View>
+    <View className="flex-1 bg-gray-100">
       <FlatList
         data={hospitals}
         keyExtractor={(item) => String(item.id)}
@@ -144,7 +159,11 @@ export function HospitalList({ category }: HospitalCardItemProps) {
           paddingVertical: 10,
           paddingBottom: 150,
         }}
-        renderItem={({ item }) => <HospitalCardItem data={item} />}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => handleNavigateToDetails(item)}>
+            <HospitalCardItem data={item} />
+          </Pressable>
+        )}
       />
     </View>
   );
